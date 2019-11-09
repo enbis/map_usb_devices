@@ -2,7 +2,6 @@ package map_usb_devices
 
 import (
 	"errors"
-	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -15,11 +14,9 @@ func GetUsbDeviceMap(root, dev string, product, vendor uint16) (map[string]strin
 		return nil, err
 	}
 
-	fmt.Printf("pre %v", pPorts)
 	sort.Slice(pPorts, func(i, j int) bool {
 		return pPorts[i].ModTime().Before(pPorts[j].ModTime())
 	})
-	fmt.Printf("post %v", pPorts)
 
 	resMap := make(map[string]string, len(pPorts))
 
