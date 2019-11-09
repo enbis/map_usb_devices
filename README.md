@@ -1,6 +1,6 @@
 ### map_usb_devices
 
-Package to map a specific `idProduct:idVendor` on its com port open. 
+Map each plugged devices with the relative com port opened, providing `idProduct:idVendor` and the location of device files `/dev`. The output is a `map[string]string` with the com port and the devices information achieved through `libusb`.  
 
 ## Required
 
