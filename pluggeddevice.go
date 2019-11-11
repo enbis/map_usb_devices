@@ -21,7 +21,7 @@ func GetDevicesInfo(product, vendor uint16) ([]string, error) {
 		manuf, _ := dev.Manufacturer()
 		prod, _ := dev.Product()
 		sn, _ := dev.SerialNumber()
-		res = append(res, fmt.Sprintf("Manufacturer@%s; Product@%s; SerialNumber@%s; Description@%s", manuf, prod, sn, dev.String()))
+		res = append(res, fmt.Sprintf("Manufacturer=%s; Product=%s; SerialNumber=%s; Description=%s", manuf, prod, sn, dev.String()))
 
 		defer dev.Close()
 	}
