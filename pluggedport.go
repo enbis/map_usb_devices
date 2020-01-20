@@ -2,12 +2,11 @@ package map_usb_devices
 
 import (
 	"io/ioutil"
-	"os"
 	"strings"
 )
 
-func GetPluggedDevices(root, dev string) ([]os.FileInfo, error) {
-	res := []os.FileInfo{}
+func GetPluggedDevices(root, dev string) ([]string, error) {
+	res := []string{}
 
 	files, err := ioutil.ReadDir(root)
 	if err != nil {
@@ -15,8 +14,9 @@ func GetPluggedDevices(root, dev string) ([]os.FileInfo, error) {
 	}
 
 	for _, f := range files {
+
 		if strings.Contains(f.Name(), dev) {
-			res = append(res, f)
+			res = append(res, f.Name())
 		}
 	}
 

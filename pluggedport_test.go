@@ -2,7 +2,6 @@ package map_usb_devices
 
 import (
 	"fmt"
-	"os"
 	"testing"
 )
 
@@ -22,7 +21,7 @@ var testCases = []struct {
 
 var implementations = []struct {
 	descr string
-	f     func(r, d string) ([]os.FileInfo, error)
+	f     func(r, d string) ([]string, error)
 }{
 	{
 		descr: "PluggedPort",

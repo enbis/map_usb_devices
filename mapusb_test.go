@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetUsbDeviceMap(t *testing.T) {
-	res, err := GetUsbDeviceMap("/dev", "ttyUSB", 0x6001, 0x0403)
+	res, err := GetUsbDeviceMap("/dev", "ttybrd", 0x6001, 0x0403)
 	if err != nil {
 		t.Fatal(err)
 	}

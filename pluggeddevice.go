@@ -1,8 +1,6 @@
 package map_usb_devices
 
 import (
-	"fmt"
-
 	"github.com/google/gousb"
 )
 
@@ -18,10 +16,8 @@ func GetDevicesInfo(product, vendor uint16) ([]string, error) {
 	}
 
 	for _, dev := range devices {
-		manuf, _ := dev.Manufacturer()
 		prod, _ := dev.Product()
-		sn, _ := dev.SerialNumber()
-		res = append(res, fmt.Sprintf("{\"manufacturer\":\"%s\", \"product\":\"%s\", \"serialNumber\":\"%s\", \"description\":\"%s\"}", manuf, prod, sn, dev.String()))
+		res = append(res, prod)
 
 		defer dev.Close()
 	}
