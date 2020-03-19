@@ -10,6 +10,10 @@ Install the development version of libusb
 
 ## How it works
 
+Take a look here
+
+`https://dev.to/enbis/how-udev-rules-can-help-us-to-recognize-a-usb-to-serial-device-over-dev-tty-interface-pbk`
+
 Get the attached device 
 
 ``` bash
