@@ -3,9 +3,15 @@ package map_usb_devices
 import (
 	"errors"
 	"sort"
-	"strconv"
 	"strings"
 )
+
+type DeviceInfo struct {
+	Manufacturer string `json:"manufacturer"`
+	Product      string `json:"product"`
+	SerialNumber string `json:"serialNumber`
+	Description  string `json:"description"`
+}
 
 func GetUsbDeviceMap(root, dev string, product, vendor uint16) (map[string]string, error) {
 
@@ -14,9 +20,7 @@ func GetUsbDeviceMap(root, dev string, product, vendor uint16) (map[string]strin
 		return nil, err
 	}
 
-	sort.Slice(pPorts, func(i, j int) bool {
-		return pPorts[i].ModTime().Before(pPorts[j].ModTime())
-	})
+	sort.Strings(pPorts)
 
 	resMap := make(map[string]string, len(pPorts))
 
@@ -25,25 +29,18 @@ func GetUsbDeviceMap(root, dev string, product, vendor uint16) (map[string]strin
 		return nil, err
 	}
 
-	tempMap := make(map[int]string, len(pDevices))
-	var orderKeys []int
-	for _, dev := range pDevices {
-		iAddr := strings.LastIndex(dev, "addr=")
-		if iAddr != -1 {
-			split := strings.Split(dev[iAddr:], "=")
-			kAddr, _ := strconv.Atoi(split[1])
-			tempMap[kAddr] = dev
-			orderKeys = append(orderKeys, kAddr)
-		}
-	}
+	sort.Strings(pDevices)
 
-	sort.Ints(orderKeys)
-
-	if len(pPorts) != len(orderKeys) {
+	if len(pPorts) != len(pDevices) {
 		return nil, errors.New("Error comparison ports and devices")
 	}
-	for i, k := range orderKeys {
-		resMap[pPorts[i].Name()] = tempMap[k]
+
+	for i, d := range pDevices {
+
+		if !strings.Contains(pPorts[i], d) {
+			return nil, errors.New("Error between ports and devices: values not aligned, check rules.d file")
+		}
+		resMap[pPorts[i]] = d
 	}
 
 	return resMap, nil

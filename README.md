@@ -83,3 +83,14 @@ for Linux environment:
 ```
 GetUsbDeviceMap(root, dev string, product, vendor uint16)
 ```
+
+### Starting from tag v0.0.5
+
+Fix startup problem, using ad-hoc rule in `/etc/udev/rules.d`.  
+Is possible to create a `SYMLINK` in order to map a /dev/tty device with the specific ID value. 
+
+```
+#cat >/etc/udev/rules.d/99-usb-serial.rules <<'EOT'
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="tty%E{ID_MODEL}"
+EOT
+```
